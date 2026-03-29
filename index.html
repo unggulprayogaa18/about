@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About & Contact | Revolution Aerospace</title>
+    <style>
+        :root {
+            --bg-white: #ffffff;
+            --bg-card: #f4f4f5;
+            --bg-dark: #09090b;
+            --bg-card-dark: #121214;
+            --border-light: rgba(0, 0, 0, 0.08);
+            --border-dark: rgba(255, 255, 255, 0.08);
+            --brand-orange: #ff5e00;
+            --text-dark: #09090b;
+            --text-muted: #71717a;
+            --text-light: #fcfcfc;
+            --text-muted-light: #a1a1aa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        body {
+            /* Menggunakan tema gelap sebagai default berdasarkan desain awal */
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            border-bottom: 1px solid var(--border-dark);
+            position: sticky;
+            top: 0;
+            background: rgba(9, 9, 11, 0.85); /* Disesuaikan dengan --bg-dark */
+            backdrop-filter: blur(12px);
+            z-index: 100;
+        }
+        nav .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: -1px; color: var(--text-light); }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav ul li a { color: var(--text-muted-light); text-decoration: none; font-weight: 500; transition: color 0.3s;}
+        nav ul li a:hover { color: var(--brand-orange); }
+
+        /* --- HERO (ABOUT) --- */
+        .hero {
+            padding: 10rem 5% 6rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 5rem;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+        .hero p {
+            color: var(--text-muted-light);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- NEW 1: DRAMATIC ABOUT (Video Bintik Style) --- */
+        .dramatic-about {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 5%;
+            overflow: hidden;
+            background-color: #000;
+        }
+        .da-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('assets/people/kristian.png'); 
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            filter: grayscale(100%) contrast(120%);
+        }
+        .da-dot-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.8) 1px, transparent 1px);
+            background-size: 4px 4px; 
+            z-index: 1;
+        }
+        .da-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 60vh;
+        }
+        .da-titles {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 4.5rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: var(--text-light);
+        }
+        .da-titles .right { text-align: right; }
+        .da-titles .right span { color: var(--brand-orange); }
+        .da-slash {
+            position: absolute;
+            top: 40%;
+            left: -10%;
+            width: 120%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: rotate(-10deg);
+            z-index: 3;
+        }
+        .da-desc {
+            max-width: 500px;
+            font-size: 1.2rem;
+            color: var(--text-muted-light);
+            line-height: 1.5;
+        }
+        .da-desc strong { color: var(--text-light); font-weight: 500; }
+
+        /* --- NEW 2: QUOTE SECTION (Keren2.jpg Style) --- */
+        .quote-showcase {
+            padding: 8rem 5%;
+            background: linear-gradient(135deg, var(--bg-card-dark) 0%, var(--bg-dark) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+        }
+        .quote-showcase::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 94, 0, 0.05) 0%, transparent 50%); /* Disesuaikan dengan brand-orange */
+            z-index: 0; pointer-events: none;
+        }
+        .quote-container {
+            display: flex;
+            max-width: 1000px;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .quote-image-wrapper {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .quote-image-wrapper img {
+            width: 250px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .quote-icon {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background-color: var(--brand-orange);
+            width: 60px; height: 60px;
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 2rem; color: var(--bg-white);
+            box-shadow: 0 10px 20px rgba(255, 94, 0, 0.3);
+        }
+        .quote-text blockquote {
+            font-size: 1.6rem;
+            line-height: 1.4;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        .quote-text p { color: var(--text-muted-light); font-size: 1rem; }
+
+        /* --- TEAM SECTION --- */
+        .team-section {
+            padding: 8rem 5%;
+            background-color: var(--bg-dark);
+        }
+        .team-section h2 {
+            font-size: 3rem; margin-bottom: 4rem; letter-spacing: -1px; text-align: center; color: var(--text-light);
+        }
+        .team-grid {
+            display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; max-width: 1200px; margin: 0 auto;
+        }
+        .team-card {
+            display: flex; align-items: center; background-color: var(--bg-card-dark);
+            border: 1px solid var(--border-dark); border-radius: 50px;
+            padding: 8px 24px 8px 8px; gap: 15px; transition: all 0.4s; cursor: pointer; width: fit-content;
+        }
+        .team-card:hover {
+            background-color: #1a1a1c; transform: translateY(-5px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .team-card img {
+            width: 55px; height: 55px; border-radius: 50%; object-fit: cover;
+            background-color: #222; filter: grayscale(20%); transition: filter 0.3s;
+        }
+        .team-card:hover img { filter: grayscale(0%); }
+        .team-info h4 { font-size: 1.1rem; margin-bottom: 2px; color: var(--text-light); }
+        .team-info p { font-size: 0.85rem; color: var(--text-muted-light); text-transform: capitalize; }
+
+        /* --- NEW 3: CLIENT FEEDBACK --- */
+        .client-feedback {
+            padding: 8rem 5%;
+            background-color: #000;
+        }
+        .cf-header { text-align: center; margin-bottom: 4rem; }
+        .cf-header h2 { font-size: 3rem; letter-spacing: -1px; margin-bottom: 1rem; color: var(--text-light); }
+        .cf-header p { color: var(--text-muted-light); max-width: 600px; margin: 0 auto; }
+        
+        .cf-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            max-width: 1000px;
+            margin: 0 auto;
+            border: 1px solid var(--border-dark);
+            background-color: var(--bg-card-dark);
+        }
+        .cf-left {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .cf-left img {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            object-fit: cover;
+            background-color: #222; 
+        }
+        .cf-controls {
+            display: flex;
+            border-top: 1px solid var(--border-dark);
+        }
+        .cf-btn {
+            flex: 1;
+            padding: 1.5rem;
+            background: var(--bg-dark);
+            border: none; border-right: 1px solid var(--border-dark);
+            color: var(--text-muted-light);
+            font-size: 1.2rem; cursor: pointer; transition: color 0.3s;
+        }
+        .cf-btn:last-child { border-right: none; }
+        .cf-btn:hover { color: var(--text-light); }
+        
+        .cf-right {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .cf-rating { color: var(--brand-orange); font-weight: bold; font-size: 1.2rem; margin-bottom: 2rem; }
+        .cf-quote { font-size: 1.4rem; line-height: 1.6; font-weight: 500; margin-bottom: 3rem; color: var(--text-light); }
+        .cf-author-area { display: flex; justify-content: space-between; align-items: flex-end; }
+        .cf-author h4 { font-size: 1.1rem; color: var(--text-light); }
+        .cf-author p { color: var(--text-muted-light); font-size: 0.9rem; }
+        .cf-logo { display: flex; align-items: center; gap: 8px; font-weight: bold; color: var(--text-light); }
+        .cf-logo span { width: 20px; height: 20px; background: var(--text-light); border-radius: 4px; display: inline-block;}
+
+        /* --- CONTACT / FAQ --- */
+        .contact-section { padding: 8rem 5%; max-width: 800px; margin: 0 auto; }
+        .contact-section h2 { text-align: center; font-size: 3.5rem; letter-spacing: -1px; margin-bottom: 4rem; color: var(--text-light); }
+        details {
+            background-color: var(--bg-card-dark); border: 1px solid var(--border-dark);
+            border-radius: 12px; margin-bottom: 1rem; overflow: hidden; transition: background 0.3s;
+        }
+        details:hover { background-color: #1a1a1c; }
+        summary {
+            padding: 1.5rem; font-size: 1.2rem; font-weight: 500; cursor: pointer; color: var(--text-light);
+            list-style: none; display: flex; justify-content: space-between; align-items: center;
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '+'; font-size: 1.5rem; color: var(--text-muted-light); transition: transform 0.3s; }
+        details[open] summary::after { transform: rotate(45deg); }
+        details p {
+            padding: 0 1.5rem 1.5rem; color: var(--text-muted-light); border-top: 1px solid var(--border-dark);
+            margin-top: 1rem; padding-top: 1rem; animation: fadeDown 0.4s ease-in-out;
+        }
+
+        /* --- MUSIC PLAYER --- */
+        .music-player {
+            position: fixed; bottom: 30px; right: 30px; background: var(--bg-card-dark);
+            border: 1px solid var(--border-dark); padding: 15px 20px; border-radius: 50px;
+            display: flex; align-items: center; gap: 15px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .music-btn {
+            background: var(--text-light); color: var(--bg-dark); border: none; width: 40px; height: 40px;
+            border-radius: 50%; cursor: pointer; font-weight: bold; display: flex; justify-content: center; align-items: center;
+        }
+        .music-info { font-size: 0.8rem; color: var(--text-muted-light); }
+
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .da-titles { font-size: 3rem; flex-direction: column; gap: 1rem; }
+            .da-titles .right { text-align: left; }
+            .quote-container { flex-direction: column; text-align: center; }
+            .cf-container { grid-template-columns: 1fr; }
+            .cf-right { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="../contact/Swear It Again - Westlife (Francis Greg & Dave Moffatt cover).mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-player">
+        <button class="music-btn" id="playBtn">▶</button>
+        <div class="music-info">
+            <span style="color: var(--text-light); font-weight: bold;">Playing</span><br>
+            Swear It Again
+        </div>
+    </div>
+
+    <nav>
+        <div class="logo">RevAero_</div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="about" class="hero reveal">
+        <h1>Pioneering the Future<br>of Aerospace.</h1>
+        <p>We are a team of designers and engineers creating bold, functional, and secure digital & hardware experiences for the aviation and agriculture sectors.</p>
+    </section>
+
+    <section class="dramatic-about reveal">
+        <div class="da-bg"></div>
+        <div class="da-dot-overlay"></div>
+        <div class="da-slash"></div>
+        
+        <div class="da-content">
+            <div class="da-titles">
+                <div class="left">About</div>
+                <div class="right">RevAero<span>_</span></div>
+            </div>
+            <p class="da-desc">
+                <strong>We are engineers and innovators creating</strong> bold, functional, and award-winning systems that help the aerospace industry bridge the gap between vision and operational reality.
+            </p>
+        </div>
+    </section>
+
+    <section class="quote-showcase reveal">
+        <div class="quote-container">
+            <div class="quote-image-wrapper">
+                <img src="assets/people/adam.png" alt="Quote Author">
+                <div class="quote-icon">❝</div>
+            </div>
+            <div class="quote-text">
+                <blockquote>“Aviation technology is advancing rapidly, and while it offers immense opportunity, it requires rigorous safety standards. If not properly regulated and aligned with advanced DAA systems, scale could become a fundamental challenge to the airspace.”</blockquote>
+                <p>Industry Visionary</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="team-section reveal">
+        <h2>Supported by leading experts<br>and visionaries.</h2>
+        <div class="team-grid" id="teamContainer">
+            </div>
+    </section>
+
+    <section class="client-feedback reveal">
+        <div class="cf-header">
+            <h2>Client feedback in their words</h2>
+            <p>Our UTM and DAA solutions aim to promote safe airspace integration. Around the world, operators rely on us to scale their drone programs.</p>
+        </div>
+        <div class="cf-container">
+            <div class="cf-left">
+                <img src="assets/people/tom.png" alt="Client">
+                <div class="cf-controls">
+                    <button class="cf-btn">←</button>
+                    <button class="cf-btn">→</button>
+                </div>
+            </div>
+            <div class="cf-right">
+                <div class="cf-rating">★ 4.9</div>
+                <p class="cf-quote">"Working with RevAero has been a game-changer. Their robust DAA systems and SORA compliance strategies helped us triple our BVLOS operations in just six months safely."</p>
+                <div class="cf-author-area">
+                    <div class="cf-author">
+                        <h4>Noah Ramirez</h4>
+                        <p>Operations Director</p>
+                    </div>
+                    <div class="cf-logo">
+                        <span></span> Overlay
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section reveal">
+        <h2>Questions?<br>We're here to assist!</h2>
+        
+        <details>
+            <summary>How can I schedule a UTM system demo?</summary>
+            <p>You can reach out to our team directly. We are currently scheduling demonstrations for our latest modules.</p>
+        </details>
+        <details>
+            <summary>What industries do you specialize in?</summary>
+            <p>We primarily focus on advanced aerospace solutions, including Detect and Avoid (DAA) systems, specialized cargo transport, and precision agriculture technology.</p>
+        </details>
+        <details>
+            <summary>Do you work with international clients?</summary>
+            <p>Yes, our systems are designed with global regulatory frameworks in mind (such as SORA) and we support partners worldwide.</p>
+        </details>
+    </section>
+
+    <script>
+        // Data 22 Anggota Tim
+        const teamMembers = [
+            { name: 'Terry', role: 'Leadership', img: 'terry.png' },
+            { name: 'Kristian', role: 'Lead Systems Engineer', img: 'kristian.png' },
+            { name: 'Adam', role: 'Engineer', img: 'adam.png' },
+            { name: 'Angus', role: 'Specialist', img: 'angus.png' },
+            { name: 'Cal', role: 'Project Manager', img: 'cal.png' },
+            { name: 'Connor', role: 'Analyst', img: 'connor.png' },
+            { name: 'Daniel', role: 'Developer', img: 'daniel.png' },
+            { name: 'Diego', role: 'Designer', img: 'diego.png' },
+            { name: 'Dorotea', role: 'UX Designer', img: 'dorotea.png' },
+            { name: 'Guy', role: 'Consultant', img: 'guy.png' },
+            { name: 'Isable', role: 'Researcher', img: 'isable.png' },
+            { name: 'Mattew', role: 'Engineer', img: 'mattew.png' },
+            { name: 'Matteww', role: 'Technician', img: 'matteww.png' },
+            { name: 'Rowan', role: 'Strategist', img: 'rowan.png' },
+            { name: 'Sam', role: 'Coordinator', img: 'sam.png' },
+            { name: 'Sean', role: 'Developer', img: 'sean.png' },
+            { name: 'Shope', role: 'Marketing', img: 'shope.png' },
+            { name: 'Thomas', role: 'Operations', img: 'thomas.png' },
+            { name: 'Timoty', role: 'Support', img: 'timoty.png' },
+            { name: 'Tom', role: 'Sales', img: 'tom.png' },
+            { name: 'Waleed', role: 'Software Engineer', img: 'waleed.png' },
+            { name: 'Zihuang', role: 'Operations', img: 'zihuang.png' }
+        ];
+
+        // Render Cards ke DOM
+        const teamContainer = document.getElementById('teamContainer');
+        teamMembers.forEach((member, index) => {
+            const delay = index * 0.05; 
+            const cardHTML = `
+                <div class="team-card reveal" style="transition-delay: ${delay}s">
+                    <img src="assets/people/${member.img}" alt="${member.name}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'50\\' height=\\'50\\'><rect width=\\'50\\' height=\\'50\\' fill=\\'%23121214\\'/></svg>'">
+                    <div class="team-info">
+                        <h4>${member.name}</h4>
+                        <p>${member.role}</p>
+                    </div>
+                </div>
+            `;
+            teamContainer.innerHTML += cardHTML;
+        });
+
+        // Logika Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Init load
+
+        // Logika Pemutar Musik
+        const audio = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            if(isPlaying) {
+                audio.pause();
+                playBtn.innerHTML = '▶';
+            } else {
+                audio.play();
+                playBtn.innerHTML = '⏸';
+            }
+            isPlaying = !isPlaying;
+        });
+    </script>
+</body>
+</html>
