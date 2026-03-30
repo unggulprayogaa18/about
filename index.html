@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,6 @@
         }
 
         body {
-            /* Menggunakan tema gelap sebagai default berdasarkan desain awal */
             background-color: var(--bg-dark);
             color: var(--text-light);
             line-height: 1.6;
@@ -41,40 +41,170 @@
             transform: translateY(40px);
             transition: all 0.9s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
+
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- NAVIGATION --- */
-        nav {
+        /* =========================================
+           NOTCH SHAPE
+        ========================================= */
+        .notch {
+            position: fixed;
+            /* Diubah ke fixed agar menempel saat di-scroll */
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 550px;
+            height: 80px;
+            z-index: 105;
+        }
+
+        .notch svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* =========================================
+           NAVBAR CONTAINER
+        ========================================= */
+        #main-nav {
+            position: fixed;
+            /* Diubah ke fixed agar menempel saat di-scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 5%;
-            border-bottom: 1px solid var(--border-dark);
-            position: sticky;
-            top: 0;
-            background: rgba(9, 9, 11, 0.85); /* Disesuaikan dengan --bg-dark */
-            backdrop-filter: blur(12px);
-            z-index: 100;
+            z-index: 110;
+            /* Tambahan efek blur opsional agar teks terbaca saat melewati background terang */
+            background: linear-gradient(to bottom, rgba(9, 9, 11, 0.9) 0%, rgba(9, 9, 11, 0) 100%);
         }
-        nav .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: -1px; color: var(--text-light); }
-        nav ul { list-style: none; display: flex; gap: 2rem; }
-        nav ul li a { color: var(--text-muted-light); text-decoration: none; font-weight: 500; transition: color 0.3s;}
-        nav ul li a:hover { color: var(--brand-orange); }
+
+        /* =========================================
+           LOGO
+        ========================================= */
+        .logo {
+            display: flex;
+            left: 20px;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* =========================================
+           NAV LINKS (CENTERED)
+        ========================================= */
+        .ag-nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            height: 100%;
+            padding: 0;
+            background: transparent;
+        }
+
+        .ag-nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .ag-nav-links a:hover {
+            color: var(--brand-orange);
+        }
+
+        .ag-nav-links a.active {
+            color: var(--brand-orange);
+            font-weight: 600;
+        }
+
+        /* =========================================
+           BUTTON
+        ========================================= */
+        .ag-btn {
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ag-btn-primary {
+            background: var(--brand-orange);
+            color: #fff;
+        }
+
+        .ag-btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* =========================================
+           NAVBAR RESPONSIVE
+        ========================================= */
+        @media (max-width: 992px) {
+            .notch {
+                display: none;
+            }
+
+            #main-nav {
+                background: var(--bg-dark);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .ag-nav-links {
+                position: static;
+                transform: none;
+                gap: 1.5rem;
+            }
+
+            .ag-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .ag-nav-links {
+                display: none;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+        }
 
         /* --- HERO (ABOUT) --- */
         .hero {
-            padding: 10rem 5% 6rem;
+            padding: 12rem 5% 6rem;
+            /* Padding top ditambah untuk memberi ruang navbar fixed */
             text-align: center;
         }
+
         .hero h1 {
             font-size: 5rem;
             letter-spacing: -2px;
             margin-bottom: 1.5rem;
             line-height: 1.1;
         }
+
         .hero p {
             color: var(--text-muted-light);
             font-size: 1.2rem;
@@ -82,33 +212,63 @@
             margin: 0 auto;
         }
 
-        /* --- NEW 1: DRAMATIC ABOUT (Video Bintik Style) --- */
-        .dramatic-about {
+        /* --- DRAMATIC ABOUT (SCROLL LOCK) --- */
+        .da-scroll-track {
             position: relative;
-            min-height: 80vh;
+            height: 200vh;
+            background-color: var(--bg-dark);
+        }
+
+        .dramatic-about {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            background-color: #000;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 5rem 5%;
             overflow: hidden;
-            background-color: #000;
         }
+
         .da-bg {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: url('assets/people/kristian.png'); 
-            background-size: cover;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: contain;
+            background-repeat: no-repeat;
             background-position: center;
             opacity: 0.3;
             filter: grayscale(100%) contrast(120%);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .da-bg-terry {
+            background-image: url('assets/people/terry.png');
+            z-index: 0;
+            top: 80px;
+        }
+
+        .da-bg-kristian {
+            background-image: url('assets/people/kristian.png');
+            z-index: 0;
+            top: 90px;
+            opacity: 0;
+        }
+
         .da-dot-overlay {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-image: radial-gradient(rgba(0, 0, 0, 0.8) 1px, transparent 1px);
-            background-size: 4px 4px; 
+            background-size: 4px 4px;
             z-index: 1;
         }
+
         .da-content {
             position: relative;
             z-index: 2;
@@ -119,6 +279,7 @@
             justify-content: space-between;
             height: 60vh;
         }
+
         .da-titles {
             display: flex;
             justify-content: space-between;
@@ -128,27 +289,188 @@
             letter-spacing: -2px;
             color: var(--text-light);
         }
-        .da-titles .right { text-align: right; }
-        .da-titles .right span { color: var(--brand-orange); }
-        .da-slash {
-            position: absolute;
-            top: 40%;
-            left: -10%;
-            width: 120%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: rotate(-10deg);
-            z-index: 3;
+
+        .da-titles .right {
+            text-align: right;
         }
-        .da-desc {
+
+        .da-titles .right span {
+            color: var(--brand-orange);
+        }
+
+        .da-desc-wrapper {
+            position: relative;
             max-width: 500px;
+            height: 120px;
+        }
+
+        .da-desc {
+            position: absolute;
+            top: 0;
+            left: 0;
             font-size: 1.2rem;
             color: var(--text-muted-light);
             line-height: 1.5;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .da-desc strong { color: var(--text-light); font-weight: 500; }
 
-        /* --- NEW 2: QUOTE SECTION (Keren2.jpg Style) --- */
+        .da-desc strong {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .da-desc-terry {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .da-desc-kristian {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        /* TRIGGER PHASE 2 */
+        .dramatic-about.phase-2 .da-bg-terry {
+            opacity: 0;
+        }
+
+        .dramatic-about.phase-2 .da-bg-kristian {
+            opacity: 0.3;
+        }
+
+        .dramatic-about.phase-2 .da-desc-terry {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        .dramatic-about.phase-2 .da-desc-kristian {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* --- HERO VIDEO / OUR VISION --- */
+        .hero-video {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 5rem 5%;
+            border-top: 1px solid var(--border-dark);
+        }
+
+        .bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            object-fit: cover;
+            filter: grayscale(30%);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(9, 9, 11, 0.7), rgba(9, 9, 11, 0.9));
+            z-index: 1;
+        }
+
+        .vision-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .vision-content h1 {
+            font-size: 3rem;
+            letter-spacing: 2px;
+            color: var(--brand-orange);
+            text-transform: uppercase;
+        }
+
+        .vision-content blockquote {
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-light);
+            font-style: italic;
+            border-left: 4px solid var(--brand-orange);
+            padding-left: 1.5rem;
+            text-align: left;
+            margin: 0 auto;
+        }
+
+        .vision-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted-light);
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        /* --- OUR VALUES --- */
+        .values-section {
+            padding: 10rem 5%;
+            background-color: var(--bg-dark);
+            text-align: center;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .values-section h2 {
+            font-size: 5rem;
+            line-height: 1;
+            letter-spacing: -2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            transition: color 0.5s ease;
+        }
+
+        .values-section h2:hover {
+            color: var(--text-light);
+        }
+
+        .values-section h2 span {
+            color: var(--brand-orange);
+        }
+
+        .values-placeholder {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .value-box {
+            width: 250px;
+            height: 150px;
+            border: 1px dashed var(--border-dark);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* --- QUOTE SECTION --- */
         .quote-showcase {
             padding: 8rem 5%;
             background: linear-gradient(135deg, var(--bg-card-dark) 0%, var(--bg-dark) 100%);
@@ -160,11 +482,19 @@
             border-top: 1px solid var(--border-dark);
             border-bottom: 1px solid var(--border-dark);
         }
+
         .quote-showcase::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle at center, rgba(255, 94, 0, 0.05) 0%, transparent 50%); /* Disesuaikan dengan brand-orange */
-            z-index: 0; pointer-events: none;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 94, 0, 0.05) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
         }
+
         .quote-container {
             display: flex;
             max-width: 1000px;
@@ -173,28 +503,36 @@
             position: relative;
             z-index: 1;
         }
+
         .quote-image-wrapper {
             position: relative;
             flex-shrink: 0;
         }
+
         .quote-image-wrapper img {
             width: 250px;
             height: 300px;
             object-fit: cover;
             border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
+
         .quote-icon {
             position: absolute;
             top: -20px;
             right: -20px;
             background-color: var(--brand-orange);
-            width: 60px; height: 60px;
+            width: 60px;
+            height: 60px;
             border-radius: 12px;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 2rem; color: var(--bg-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: var(--bg-white);
             box-shadow: 0 10px 20px rgba(255, 94, 0, 0.3);
         }
+
         .quote-text blockquote {
             font-size: 1.6rem;
             line-height: 1.4;
@@ -202,45 +540,117 @@
             margin-bottom: 1.5rem;
             color: var(--text-light);
         }
-        .quote-text p { color: var(--text-muted-light); font-size: 1rem; }
+
+        .quote-text p {
+            color: var(--text-muted-light);
+            font-size: 1rem;
+        }
 
         /* --- TEAM SECTION --- */
         .team-section {
             padding: 8rem 5%;
             background-color: var(--bg-dark);
         }
-        .team-section h2 {
-            font-size: 3rem; margin-bottom: 4rem; letter-spacing: -1px; text-align: center; color: var(--text-light);
-        }
-        .team-grid {
-            display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; max-width: 1200px; margin: 0 auto;
-        }
-        .team-card {
-            display: flex; align-items: center; background-color: var(--bg-card-dark);
-            border: 1px solid var(--border-dark); border-radius: 50px;
-            padding: 8px 24px 8px 8px; gap: 15px; transition: all 0.4s; cursor: pointer; width: fit-content;
-        }
-        .team-card:hover {
-            background-color: #1a1a1c; transform: translateY(-5px) scale(1.02);
-            border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
-        .team-card img {
-            width: 55px; height: 55px; border-radius: 50%; object-fit: cover;
-            background-color: #222; filter: grayscale(20%); transition: filter 0.3s;
-        }
-        .team-card:hover img { filter: grayscale(0%); }
-        .team-info h4 { font-size: 1.1rem; margin-bottom: 2px; color: var(--text-light); }
-        .team-info p { font-size: 0.85rem; color: var(--text-muted-light); text-transform: capitalize; }
 
-        /* --- NEW 3: CLIENT FEEDBACK --- */
+        .team-header {
+            max-width: 800px;
+            margin: 0 auto 5rem;
+            text-align: center;
+        }
+
+        .team-header h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .team-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-card-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 50px;
+            padding: 8px 24px 8px 8px;
+            gap: 15px;
+            transition: all 0.4s;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .team-card:hover {
+            background-color: #1a1a1c;
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .team-card img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #222;
+            filter: grayscale(20%);
+            transition: filter 0.3s;
+        }
+
+        .team-card:hover img {
+            filter: grayscale(0%);
+        }
+
+        .team-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+            color: var(--text-light);
+        }
+
+        .team-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted-light);
+            text-transform: capitalize;
+        }
+
+        /* --- CLIENT FEEDBACK --- */
         .client-feedback {
             padding: 8rem 5%;
             background-color: #000;
         }
-        .cf-header { text-align: center; margin-bottom: 4rem; }
-        .cf-header h2 { font-size: 3rem; letter-spacing: -1px; margin-bottom: 1rem; color: var(--text-light); }
-        .cf-header p { color: var(--text-muted-light); max-width: 600px; margin: 0 auto; }
-        
+
+        .cf-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .cf-header h2 {
+            font-size: 3rem;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .cf-header p {
+            color: var(--text-muted-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
         .cf-container {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
@@ -249,158 +659,1216 @@
             border: 1px solid var(--border-dark);
             background-color: var(--bg-card-dark);
         }
+
         .cf-left {
             position: relative;
             display: flex;
             flex-direction: column;
         }
+
         .cf-left img {
             width: 100%;
             height: 100%;
             min-height: 400px;
             object-fit: cover;
-            background-color: #222; 
+            background-color: #222;
         }
+
         .cf-controls {
             display: flex;
             border-top: 1px solid var(--border-dark);
         }
+
         .cf-btn {
             flex: 1;
             padding: 1.5rem;
             background: var(--bg-dark);
-            border: none; border-right: 1px solid var(--border-dark);
+            border: none;
+            border-right: 1px solid var(--border-dark);
             color: var(--text-muted-light);
-            font-size: 1.2rem; cursor: pointer; transition: color 0.3s;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
         }
-        .cf-btn:last-child { border-right: none; }
-        .cf-btn:hover { color: var(--text-light); }
-        
+
+        .cf-btn:last-child {
+            border-right: none;
+        }
+
+        .cf-btn:hover {
+            color: var(--text-light);
+        }
+
         .cf-right {
             padding: 4rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-        .cf-rating { color: var(--brand-orange); font-weight: bold; font-size: 1.2rem; margin-bottom: 2rem; }
-        .cf-quote { font-size: 1.4rem; line-height: 1.6; font-weight: 500; margin-bottom: 3rem; color: var(--text-light); }
-        .cf-author-area { display: flex; justify-content: space-between; align-items: flex-end; }
-        .cf-author h4 { font-size: 1.1rem; color: var(--text-light); }
-        .cf-author p { color: var(--text-muted-light); font-size: 0.9rem; }
-        .cf-logo { display: flex; align-items: center; gap: 8px; font-weight: bold; color: var(--text-light); }
-        .cf-logo span { width: 20px; height: 20px; background: var(--text-light); border-radius: 4px; display: inline-block;}
+
+        .cf-rating {
+            color: var(--brand-orange);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cf-quote {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            font-weight: 500;
+            margin-bottom: 3rem;
+            color: var(--text-light);
+        }
+
+        .cf-author-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .cf-author h4 {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .cf-author p {
+            color: var(--text-muted-light);
+            font-size: 0.9rem;
+        }
+
+        .cf-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+
+        .cf-logo span {
+            width: 20px;
+            height: 20px;
+            background: var(--text-light);
+            border-radius: 4px;
+            display: inline-block;
+        }
 
         /* --- CONTACT / FAQ --- */
-        .contact-section { padding: 8rem 5%; max-width: 800px; margin: 0 auto; }
-        .contact-section h2 { text-align: center; font-size: 3.5rem; letter-spacing: -1px; margin-bottom: 4rem; color: var(--text-light); }
+        .contact-section {
+            padding: 8rem 5%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 4rem;
+            color: var(--text-light);
+        }
+
         details {
-            background-color: var(--bg-card-dark); border: 1px solid var(--border-dark);
-            border-radius: 12px; margin-bottom: 1rem; overflow: hidden; transition: background 0.3s;
+            background-color: var(--bg-card-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: background 0.3s;
         }
-        details:hover { background-color: #1a1a1c; }
+
+        details:hover {
+            background-color: #1a1a1c;
+        }
+
         summary {
-            padding: 1.5rem; font-size: 1.2rem; font-weight: 500; cursor: pointer; color: var(--text-light);
-            list-style: none; display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text-light);
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: '+'; font-size: 1.5rem; color: var(--text-muted-light); transition: transform 0.3s; }
-        details[open] summary::after { transform: rotate(45deg); }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--text-muted-light);
+            transition: transform 0.3s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(45deg);
+        }
+
         details p {
-            padding: 0 1.5rem 1.5rem; color: var(--text-muted-light); border-top: 1px solid var(--border-dark);
-            margin-top: 1rem; padding-top: 1rem; animation: fadeDown 0.4s ease-in-out;
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-muted-light);
+            border-top: 1px solid var(--border-dark);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            animation: fadeDown 0.4s ease-in-out;
         }
 
         /* --- MUSIC PLAYER --- */
         .music-player {
-            position: fixed; bottom: 30px; right: 30px; background: var(--bg-card-dark);
-            border: 1px solid var(--border-dark); padding: 15px 20px; border-radius: 50px;
-            display: flex; align-items: center; gap: 15px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card-dark);
+            border: 1px solid var(--border-dark);
+            padding: 15px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
-        .music-btn {
-            background: var(--text-light); color: var(--bg-dark); border: none; width: 40px; height: 40px;
-            border-radius: 50%; cursor: pointer; font-weight: bold; display: flex; justify-content: center; align-items: center;
-        }
-        .music-info { font-size: 0.8rem; color: var(--text-muted-light); }
 
-        @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .music-btn {
+            background: var(--text-light);
+            color: var(--bg-dark);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .music-info {
+            font-size: 0.8rem;
+            color: var(--text-muted-light);
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* Responsive */
         @media (max-width: 900px) {
-            .da-titles { font-size: 3rem; flex-direction: column; gap: 1rem; }
-            .da-titles .right { text-align: left; }
-            .quote-container { flex-direction: column; text-align: center; }
-            .cf-container { grid-template-columns: 1fr; }
-            .cf-right { padding: 2rem; }
+            .da-titles {
+                font-size: 3rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .da-titles .right {
+                text-align: left;
+            }
+
+            .vision-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .vision-content blockquote {
+                font-size: 1.4rem;
+                padding-left: 1rem;
+            }
+
+            .values-section h2 {
+                font-size: 3.5rem;
+            }
+
+            .team-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .quote-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cf-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cf-right {
+                padding: 2rem;
+            }
+        }
+
+        /* --- MARQUEE PEOPLE SECTION --- */
+        .marquee-section {
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            /* Warna dasar hitam agar border menyatu */
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+            display: flex;
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            /* Ini dia pengatur kecepatannya 👇 */
+            animation: scroll-left-to-right 120s linear infinite;
+            margin-left: -50px;
+        }
+
+        .marquee-track img {
+            width: 280px;
+            /* Lebar foto, bisa disesuaikan */
+            height: 400px;
+            /* Tinggi foto, bisa disesuaikan */
+            object-fit: cover;
+            margin: 0;
+            /* Tidak ada gap antar elemen */
+            /* Border tebal di sisi kiri & kanan untuk efek frame/split */
+            border-right: 10px solid #000;
+            border-left: 10px solid #000;
+            filter: grayscale(20%);
+            /* Menyesuaikan tema website */
+            transition: filter 0.3s ease;
+        }
+
+        .marquee-track img:hover {
+            filter: grayscale(0%);
+        }
+
+        @keyframes marquee-right {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 768px) {
+            .marquee-track img {
+                width: 200px;
+                height: 300px;
+                border-right: 5px solid #000;
+                border-left: 5px solid #000;
+            }
+        }
+
+        /* --- PREMIUM SLANTED PEOPLE MARQUEE --- */
+        .marquee-section {
+            position: relative;
+            width: 100vw;
+            height: 520px;
+            background-color: var(--bg-dark);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Gradient overlay di kiri dan kanan agar transisi animasi mulus */
+        .marquee-section::before,
+        .marquee-section::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 15%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .marquee-section::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-dark) 0%, transparent 100%);
+        }
+
+        .marquee-section::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-dark) 0%, transparent 100%);
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            /* Animasi pergerakan */
+            animation: scroll-left-to-right 40s linear infinite;
+            /* Menggeser track sedikit ke kiri agar tidak ada celah di awal saat di-skew */
+            margin-left: -50px;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            width: 320px;
+            height: 520px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            cursor: pointer;
+            background-color: #111;
+            /* INI KUNCI EFEK MIRINGNYA */
+            transform: skewX(-12deg);
+            /* Margin negatif tipis agar benar-benar dempet tanpa celah render */
+            margin-right: -1px;
+            /* Garis tipis pembatas. Hapus baris ini kalau mau 100% menyatu */
+            border-right: 2px solid #1a1a1c;
+        }
+
+        /* Gambar dengan efek zoom & UN-SKEW */
+        .marquee-item img {
+            /* Dilebarkan (130%) untuk menutupi sudut kosong akibat proses un-skew */
+            width: 130%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(115%);
+            /* Balikkan kemiringan (12deg) agar wajah normal, geser sedikit ke kiri, lalu perbesar (scale) */
+            transform: skewX(12deg) translateX(-10%) scale(1.1);
+            transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.5s ease;
+        }
+
+        .marquee-item:hover img {
+            filter: grayscale(0%) contrast(100%);
+            /* Efek zoom in tambahan saat di-hover */
+            transform: skewX(12deg) translateX(-10%) scale(1.18);
+        }
+
+        /* Cinematic Dark Overlay yang ikut dimiringkan */
+        /* Cinematic Dark Overlay yang ikut dimiringkan */
+        .marquee-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            /* Ubah dari -20px menjadi 0 agar ukurannya pas dengan bingkai */
+            background: linear-gradient(to top, rgba(9, 9, 11, 0.95) 0%, rgba(9, 9, 11, 0) 60%);
+            opacity: 0.5;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+            /* transform: skewX(12deg); <--- BARIS INI DIHAPUS SAJA */
+        }
+
+        .marquee-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Premium Text Reveal - UN-SKEW agar tulisan tetap tegak */
+        .marquee-info {
+            position: absolute;
+            bottom: 0;
+            left: -10%;
+            /* Digeser ke kiri sedikit untuk kompensasi skew */
+            width: 120%;
+            /* Dilebarkan agar teks tidak terpotong */
+            padding: 2.5rem 3rem 2rem 3rem;
+            z-index: 2;
+            pointer-events: none;
+            transform: skewX(12deg);
+        }
+
+        .marquee-info h3 {
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: var(--text-light);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .marquee-info p {
+            font-size: 0.95rem;
+            color: var(--brand-orange);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) 0.1s;
+        }
+
+        .marquee-item:hover .marquee-info h3,
+        .marquee-item:hover .marquee-info p {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @keyframes scroll-left-to-right {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .marquee-section {
+                height: 420px;
+            }
+
+            .marquee-item {
+                width: 280px;
+                height: 420px;
+            }
+        }
+
+        /* =========================================
+   4 NEW ABOUT SECTIONS (PREMIUM)
+========================================= */
+
+        /* 1. GIANT MANIFESTO */
+        .manifesto-section {
+            padding: 10rem 5%;
+            text-align: center;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        .manifesto-text {
+            font-size: clamp(3rem, 8vw, 7.5rem);
+            /* Ukuran font akan menyesuaikan layar otomatis */
+            font-weight: 800;
+            line-height: 0.95;
+            letter-spacing: -3px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .manifesto-text span {
+            color: var(--brand-orange);
+            font-style: italic;
+        }
+
+        /* 2. BENTO CAPABILITIES */
+        .bento-section {
+            padding: 4rem 5% 8rem;
+            background: var(--bg-dark);
+        }
+
+        .bento-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(300px, auto);
+            gap: 1.5rem;
+        }
+
+        .bento-card {
+            background: var(--bg-card-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 94, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(9, 9, 11, 0.9) 100%);
+            z-index: 1;
+        }
+
+        .bento-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .bento-card h3 {
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .bento-card p {
+            color: var(--text-muted-light);
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Grid Spanning */
+        .bento-large {
+            grid-column: span 2;
+        }
+
+        .bento-tall {
+            grid-row: span 2;
+        }
+
+        /* 3. BY THE NUMBERS */
+        .stats-section {
+            padding: 6rem 5%;
+            border-top: 1px solid var(--border-dark);
+            border-bottom: 1px solid var(--border-dark);
+            background: linear-gradient(180deg, #09090b 0%, #121214 100%);
+            display: flex;
+            justify-content: center;
+            gap: 6rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(4rem, 6vw, 6rem);
+            font-weight: 700;
+            color: var(--brand-orange);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-muted-light);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        /* 4. MISSION SPLIT */
+        .mission-section {
+            padding: 10rem 5%;
+            background: var(--bg-dark);
+        }
+
+        .mission-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 6rem;
+        }
+
+        .mission-text {
+            flex: 1;
+        }
+
+        .mission-text h2 {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            letter-spacing: -1.5px;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            color: var(--text-light);
+        }
+
+        .mission-text p {
+            font-size: 1.2rem;
+            color: var(--text-muted-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .mission-visual {
+            flex: 1;
+            position: relative;
+            height: 600px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--border-dark);
+        }
+
+        .mission-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.8s ease, transform 0.8s ease;
+        }
+
+        .mission-visual:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* Responsive Adjustments for New Sections */
+        @media (max-width: 992px) {
+            .bento-container {
+                grid-template-columns: 1fr;
+            }
+
+            .bento-large {
+                grid-column: span 1;
+            }
+
+            .bento-tall {
+                grid-row: span 1;
+            }
+
+            .mission-container {
+                flex-direction: column;
+            }
+
+            .mission-visual {
+                width: 100%;
+                height: 400px;
+            }
+
+            .stats-section {
+                gap: 3rem;
+            }
+        }
+
+        /* =========================================
+   AI CHAT WIDGET (MODERN AWWWARDS STYLE)
+========================================= */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            /* Ditaruh di kiri agar tidak bentrok dengan Music Player */
+            z-index: 1000;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Tombol Floating AI */
+        .ai-chat-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--brand-orange) 0%, #d94f00 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 94, 0, 0.4);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-chat-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-chat-btn svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* Jendela Chat */
+        .ai-chat-window {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 360px;
+            height: 500px;
+            background: var(--bg-card-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transform-origin: bottom left;
+        }
+
+        .ai-chat-window.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        .ai-chat-header {
+            padding: 15px 20px;
+            background: #1a1a1c;
+            border-bottom: 1px solid var(--border-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00ff66;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff66;
+        }
+
+        .ai-chat-header h3 {
+            font-size: 1rem;
+            margin: 0;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .ai-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .ai-close-btn:hover {
+            color: var(--text-light);
+        }
+
+        /* Area Pesan */
+        .ai-chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            animation: fadeUpMsg 0.3s ease forwards;
+        }
+
+        @keyframes fadeUpMsg {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-msg.user {
+            background: var(--brand-orange);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-msg.ai {
+            background: #222;
+            color: var(--text-light);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Input Area */
+        .ai-chat-input-area {
+            padding: 15px;
+            border-top: 1px solid var(--border-dark);
+            display: flex;
+            gap: 10px;
+            background: var(--bg-dark);
+        }
+
+        .ai-chat-input-area input {
+            flex: 1;
+            padding: 12px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--border-dark);
+            background: #1a1a1c;
+            color: white;
+            outline: none;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .ai-chat-input-area input:focus {
+            border-color: var(--brand-orange);
+        }
+
+        .ai-chat-input-area button {
+            background: var(--brand-orange);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .ai-chat-input-area button:hover {
+            background: #d94f00;
+        }
+
+        @media (max-width: 576px) {
+            .ai-chat-widget {
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .ai-chat-window {
+                width: calc(100vw - 40px);
+                height: 450px;
+            }
+        }
+
+        /* =========================================
+           LET'S CONNECT & MAP SECTION
+        ========================================= */
+        .connect-section {
+            padding: 8rem 5%;
+            background-color: var(--bg-dark);
+            border-top: 1px solid var(--border-dark);
+        }
+
+        .connect-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: stretch;
+        }
+
+        /* Bagian Kiri: Info & Form */
+        .connect-info h2 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            letter-spacing: -1.5px;
+            color: var(--text-light);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .connect-info p {
+            font-size: 1.1rem;
+            color: var(--text-muted-light);
+            margin-bottom: 1rem;
+            max-width: 90%;
+        }
+
+        .connect-email {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--brand-orange);
+            text-decoration: none;
+            margin-bottom: 3rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .connect-email:hover {
+            opacity: 0.8;
+        }
+
+        /* Styling Form */
+        .connect-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .connect-form input,
+        .connect-form textarea {
+            width: 100%;
+            background-color: var(--bg-card-dark);
+            border: 1px solid var(--border-dark);
+            color: var(--text-light);
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .connect-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .connect-form input:focus,
+        .connect-form textarea:focus {
+            outline: none;
+            border-color: var(--brand-orange);
+            box-shadow: 0 0 0 2px rgba(255, 94, 0, 0.2);
+            background-color: #1a1a1c;
+        }
+
+        .connect-form input::placeholder,
+        .connect-form textarea::placeholder {
+            color: #555;
+        }
+
+        .connect-form .ag-btn {
+            align-self: flex-start;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            /* Pill shape */
+        }
+
+        /* Bagian Kanan: Peta */
+        .connect-map {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-dark);
+            position: relative;
+        }
+
+        .connect-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            /* Membuat peta menjadi grayscale agar cocok dengan tema dark, saat dihover jadi berwarna */
+            filter: grayscale(100%) invert(90%) contrast(1.2);
+            transition: filter 0.5s ease;
+        }
+
+        .connect-map:hover iframe {
+            filter: grayscale(0%) invert(0%) contrast(1);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .connect-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .connect-map {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }/* --- DYNAMIC QUOTE TRANSITION --- */
+        #quoteDynamicContainer {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .quote-hidden {
+            opacity: 0;
+            transform: translateY(15px);
         }
     </style>
 </head>
+
 <body>
 
-    <audio id="bgMusic" loop>
-        <source src="../contact/Swear It Again - Westlife (Francis Greg & Dave Moffatt cover).mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic"></audio>
 
     <div class="music-player">
         <button class="music-btn" id="playBtn">▶</button>
         <div class="music-info">
             <span style="color: var(--text-light); font-weight: bold;">Playing</span><br>
-            Swear It Again
+            <span id="trackName">Memuat...</span>
         </div>
     </div>
 
-    <nav>
-        <div class="logo">RevAero_</div>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#team">Team</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+    <div class="notch">
+        <svg viewBox="0 0 550 80" preserveAspectRatio="none">
+            <polygon points="0,0 550,0 490,80 60,80" fill="#09090b" />
+            <polyline points="0,0 60,80 490,80 550,0" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+        </svg>
+    </div>
+
+    <nav id="main-nav">
+        <div class="logo">
+            <img src="assets/foto/logo.png" alt="RevAero Logo" id="nav-logo">
+        </div>
+        <div class="ag-nav-links">
+            <a href="https://revnaerodaa.vercel.app/">Detect & Avoid</a>
+            <a href="https://revnaerocargo.vercel.app/">Cargo Delivery</a>
+            <a href="https://revnaeroagriculture.vercel.app/">Agriculture</a>
+        </div>
+        <button class="ag-btn ag-btn-primary" style="position: relative; right: 20px;">Consult Agronomist</button>
     </nav>
+    <div class="da-scroll-track">
+        <section class="dramatic-about">
+            <div class="da-bg da-bg-terry"></div>
+            <div class="da-bg da-bg-kristian"></div>
+            <div class="da-dot-overlay"></div>
 
-    <section id="about" class="hero reveal">
-        <h1>Pioneering the Future<br>of Aerospace.</h1>
-        <p>We are a team of designers and engineers creating bold, functional, and secure digital & hardware experiences for the aviation and agriculture sectors.</p>
-    </section>
+            <div class="da-content">
+                <div class="da-titles">
+                    <div class="left">About</div>
+                    <div class="right">RevAero<span>_</span></div>
+                </div>
 
-    <section class="dramatic-about reveal">
-        <div class="da-bg"></div>
-        <div class="da-dot-overlay"></div>
-        <div class="da-slash"></div>
-        
-        <div class="da-content">
-            <div class="da-titles">
-                <div class="left">About</div>
-                <div class="right">RevAero<span>_</span></div>
+                <div class="da-desc-wrapper">
+                    <p class="da-desc da-desc-terry">
+                        <strong>We are engineers and innovators creating</strong> bold, functional, and award-winning
+                        systems
+                        that help the aerospace industry bridge the gap between vision and operational reality.
+                    </p>
+                    <p class="da-desc da-desc-kristian">
+                        <strong>Led by deep technical expertise,</strong> we design scalable UTM and DAA architecture
+                        to ensure uncompromised safety and compliance in the global airspace.
+                    </p>
+                </div>
             </div>
-            <p class="da-desc">
-                <strong>We are engineers and innovators creating</strong> bold, functional, and award-winning systems that help the aerospace industry bridge the gap between vision and operational reality.
-            </p>
+        </section>
+    </div>
+
+    <section id="vision" class="hero-video reveal">
+        <video autoplay loop muted playsinline class="bg-video">
+            <source src="https://video.wixstatic.com/video/11062b_cb0c4d13153f4008920bb26beda8de0f/720p/mp4/file.mp4"
+                type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="video-overlay"></div>
+
+        <div class="vision-content">
+            <h1>Our Vision</h1>
+            <blockquote>"We tend to overestimate the effect of a technology in the short run and underestimate the
+                effect in the long run" <br><span
+                    style="font-size: 1.2rem; font-style: normal; color: var(--brand-orange);">- Amara's law.</span>
+            </blockquote>
+            <p>Revolution Aerospace launched to solve complex autonomous systems operations for the Australian industry
+                and beyond, helping companies implement the right solution with our dedicated expertise.</p>
+            <p>We know the benefits that can be reaped from autonomous systems technologies within numerous domains and
+                we want to help bring them to life.</p>
         </div>
     </section>
-
-    <section class="quote-showcase reveal">
-        <div class="quote-container">
-            <div class="quote-image-wrapper">
-                <img src="assets/people/adam.png" alt="Quote Author">
-                <div class="quote-icon">❝</div>
-            </div>
-            <div class="quote-text">
-                <blockquote>“Aviation technology is advancing rapidly, and while it offers immense opportunity, it requires rigorous safety standards. If not properly regulated and aligned with advanced DAA systems, scale could become a fundamental challenge to the airspace.”</blockquote>
-                <p>Industry Visionary</p>
-            </div>
+    <section class="marquee-section reveal">
+        <div class="marquee-track" id="dynamicMarqueeTrack">
         </div>
     </section>
-
     <section id="team" class="team-section reveal">
-        <h2>Supported by leading experts<br>and visionaries.</h2>
+        <div class="team-header">
+            <h2>Meet Our Team</h2>
+            <p>We are proud to have some of the industry’s most experienced and diverse people on our team. The
+                experience, capability and passion of our people is the foundation for our success in serving our
+                clients.</p>
+            <p>Our work environment is built to foster personal and professional growth, in support of our vision, to be
+                a globally leading autonomous systems company.</p>
+            <p style="color: var(--brand-orange); font-weight: bold; margin-top: 2rem;">Our capability is the product of
+                our people.</p>
+        </div>
+
         <div class="team-grid" id="teamContainer">
-            </div>
+        </div>
     </section>
+
+    <section class="manifesto-section reveal">
+        <h2 class="manifesto-text">
+            We don't just predict the <br>
+            future of flight.<br>
+            <span>We build it.</span>
+        </h2>
+    </section>
+
+    <section class="bento-section reveal">
+        <div class="bento-container">
+            <div class="bento-card bento-large">
+                <div class="bento-content">
+                    <h3>Detect and Avoid (DAA)</h3>
+                    <p>Building the foundational architecture for uncompromised safety. Our systems process complex
+                        airspace data in real-time, enabling secure BVLOS operations and redefining autonomous
+                        integration.</p>
+                </div>
+            </div>
+            <div class="bento-card">
+                <div class="bento-content">
+                    <h3>Cargo Delivery</h3>
+                    <p>Scalable software frameworks designed to handle the logistics of tomorrow's aerial transport.</p>
+                </div>
+            </div>
+            <div class="bento-card">
+                <div class="bento-content">
+                    <h3>Agriculture</h3>
+                    <p>Precision data meets autonomous flight. Empowering agronomists with high-fidelity insights.</p>
+                </div>
+            </div>
+            <div class="bento-card bento-large">
+                <div class="bento-content">
+                    <h3>Unmanned Traffic Management (UTM)</h3>
+                    <p>Orchestrating the sky. We develop the backend endpoints and robust interfaces required to manage
+                        high-density autonomous traffic seamlessly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section reveal">
+        <div class="stat-item">
+            <div class="stat-number">2M+</div>
+            <div class="stat-label">Simulated Flights</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">99%</div>
+            <div class="stat-label">System Reliability</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">3</div>
+            <div class="stat-label">Core Verticals</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Operation Ready</div>
+        </div>
+    </section>
+
+
 
     <section class="client-feedback reveal">
         <div class="cf-header">
             <h2>Client feedback in their words</h2>
-            <p>Our UTM and DAA solutions aim to promote safe airspace integration. Around the world, operators rely on us to scale their drone programs.</p>
+            <p>Our UTM and DAA solutions aim to promote safe airspace integration. Around the world, operators rely on
+                us to scale their drone programs.</p>
         </div>
         <div class="cf-container">
             <div class="cf-left">
@@ -412,7 +1880,8 @@
             </div>
             <div class="cf-right">
                 <div class="cf-rating">★ 4.9</div>
-                <p class="cf-quote">"Working with RevAero has been a game-changer. Their robust DAA systems and SORA compliance strategies helped us triple our BVLOS operations in just six months safely."</p>
+                <p class="cf-quote">"Working with RevAero has been a game-changer. Their robust DAA systems and SORA
+                    compliance strategies helped us triple our BVLOS operations in just six months safely."</p>
                 <div class="cf-author-area">
                     <div class="cf-author">
                         <h4>Noah Ramirez</h4>
@@ -426,54 +1895,168 @@
         </div>
     </section>
 
+ <section class="quote-showcase reveal">
+        <div class="quote-container" id="quoteDynamicContainer">
+            <div class="quote-image-wrapper">
+                <img src="assets/people/terry.png" alt="Dr. Terry Martin" id="dynamicQuoteImg">
+                <div class="quote-icon">❝</div>
+            </div>
+            <div class="quote-text">
+                <blockquote id="dynamicQuoteText">“Dr Terry Martin is a former RAAF & Army military aerospace engineering officer & holds a PhD in Applied Signal Processing & Machine Learning. He is also an Adjunct Professor at Queensland University of Technology. Over a 35-year career-span, Terry has accumulated significant experience on fast jets and rotary wing crewed platforms...”</blockquote>
+                <p id="dynamicQuoteAuthor"><strong style="color: var(--brand-orange); font-size: 1.2rem;">Dr. Terry Martin</strong><br>Co-founder and CEO</p>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="contact-section reveal">
         <h2>Questions?<br>We're here to assist!</h2>
-        
+
         <details>
             <summary>How can I schedule a UTM system demo?</summary>
-            <p>You can reach out to our team directly. We are currently scheduling demonstrations for our latest modules.</p>
+            <p>You can reach out to our team directly. We are currently scheduling demonstrations for our latest
+                modules.</p>
         </details>
         <details>
             <summary>What industries do you specialize in?</summary>
-            <p>We primarily focus on advanced aerospace solutions, including Detect and Avoid (DAA) systems, specialized cargo transport, and precision agriculture technology.</p>
+            <p>We primarily focus on advanced aerospace solutions, including Detect and Avoid (DAA) systems, specialized
+                cargo transport, and precision agriculture technology.</p>
         </details>
         <details>
             <summary>Do you work with international clients?</summary>
-            <p>Yes, our systems are designed with global regulatory frameworks in mind (such as SORA) and we support partners worldwide.</p>
+            <p>Yes, our systems are designed with global regulatory frameworks in mind (such as SORA) and we support
+                partners worldwide.</p>
         </details>
     </section>
 
-    <script>
-        // Data 22 Anggota Tim
-        const teamMembers = [
-            { name: 'Terry', role: 'Leadership', img: 'terry.png' },
-            { name: 'Kristian', role: 'Lead Systems Engineer', img: 'kristian.png' },
-            { name: 'Adam', role: 'Engineer', img: 'adam.png' },
-            { name: 'Angus', role: 'Specialist', img: 'angus.png' },
-            { name: 'Cal', role: 'Project Manager', img: 'cal.png' },
-            { name: 'Connor', role: 'Analyst', img: 'connor.png' },
-            { name: 'Daniel', role: 'Developer', img: 'daniel.png' },
-            { name: 'Diego', role: 'Designer', img: 'diego.png' },
-            { name: 'Dorotea', role: 'UX Designer', img: 'dorotea.png' },
-            { name: 'Guy', role: 'Consultant', img: 'guy.png' },
-            { name: 'Isable', role: 'Researcher', img: 'isable.png' },
-            { name: 'Mattew', role: 'Engineer', img: 'mattew.png' },
-            { name: 'Matteww', role: 'Technician', img: 'matteww.png' },
-            { name: 'Rowan', role: 'Strategist', img: 'rowan.png' },
-            { name: 'Sam', role: 'Coordinator', img: 'sam.png' },
-            { name: 'Sean', role: 'Developer', img: 'sean.png' },
-            { name: 'Shope', role: 'Marketing', img: 'shope.png' },
-            { name: 'Thomas', role: 'Operations', img: 'thomas.png' },
-            { name: 'Timoty', role: 'Support', img: 'timoty.png' },
-            { name: 'Tom', role: 'Sales', img: 'tom.png' },
-            { name: 'Waleed', role: 'Software Engineer', img: 'waleed.png' },
-            { name: 'Zihuang', role: 'Operations', img: 'zihuang.png' }
-        ];
+    <div class="ai-chat-widget">
+        <button class="ai-chat-btn" id="aiChatBtn" title="Ask RevAero AI">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+        </button>
 
-        // Render Cards ke DOM
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <div class="ai-chat-header-title">
+                    <div class="ai-status-dot"></div>
+                    <h3>RevAero AI</h3>
+                </div>
+                <button class="ai-close-btn" id="aiCloseBtn">✖</button>
+            </div>
+
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="chat-msg ai">Hello! I'm the RevAero AI assistant. I can answer questions about our DAA
+                    systems, Cargo, Agriculture, UTM, or our amazing team. How can I help you today?</div>
+            </div>
+
+            <div class="ai-chat-input-area">
+                <input type="text" id="aiChatInput" placeholder="Ask something about RevAero..." autocomplete="off">
+                <button id="aiSendBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <section class="connect-section reveal" id="lets-connect">
+        <div class="connect-container">
+            <div class="connect-info">
+                <h2>Let's Connect</h2>
+                <p>If you have any questions or need help working through an autonomous systems problem, we're the team
+                    for you.</p>
+                <a href="mailto:contact@revn.aero" class="connect-email">contact@revn.aero</a>
+
+                <form class="connect-form" action="#" method="POST"
+                    onsubmit="event.preventDefault(); alert('Message ready to send!');">
+                    <div class="form-row">
+                        <input type="text" name="firstName" placeholder="First Name" required>
+                        <input type="text" name="lastName" placeholder="Last Name" required>
+                    </div>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="subject" placeholder="Subject" required>
+                    <textarea name="message" placeholder="Leave us a message..." required></textarea>
+
+                    <button type="submit" class="ag-btn ag-btn-primary">Submit</button>
+                </form>
+            </div>
+           <div class="connect-map">
+                <iframe 
+                    src="https://maps.google.com/maps?q=92+Regency+Rd,+Ferryden+Park+SA+5010,+Australia&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- 1. DATA TIM REVAERO ---
+        // --- 1. DATA TIM REVAERO ---
+        const teamMembers = [
+            { name: 'Dr. Terry Martin', role: 'Co-founder and CEO', img: 'terry.png' },
+            { name: 'Kristian Cruickshank', role: 'Co-founder and CTO', img: 'kristian.png' },
+            { name: 'Zi Huang', role: 'Product Development Lead', img: 'zihuang.png' },
+            { name: 'Rowan Carter', role: 'Senior Systems Engineer', img: 'rowan.png' },
+            { name: 'Caelan Hilferty', role: 'Computer Vision Engineer', img: 'cal.png' },
+            { name: 'Diego Rossotti', role: 'Test and Evaluation Lead', img: 'diego.png' },
+            { name: 'Angus McLaren', role: 'Senior Systems Engineer', img: 'angus.png' },
+            { name: 'Daniel Jachimowicz', role: 'Senior Operations and Capability Advisor', img: 'daniel.png' },
+            { name: 'Adam Gluchowski', role: 'Software Engineer', img: 'adam.png' },
+            { name: 'Guy Morris', role: 'Project Director - EATP', img: 'guy.png' },
+            { name: 'Dorotea Kojic', role: 'Corporate Support Officer', img: 'dorotea.png' },
+            { name: 'Tom Putland', role: 'Snr Research, Reg and Product Dev Engineer', img: 'tom.png' },
+            { name: 'Matthew Ford', role: 'Graduate Engineer', img: 'mattew.png' },
+            { name: 'Connor Demerutis', role: 'Graduate Engineer', img: 'connor.png' },
+            { name: 'Waleed Khan', role: 'Senior Systems Engineer', img: 'waleed.png' },
+            { name: 'Yoga Unggul Prayoga', role: 'Fullstack Software Engineer', img: 'yoga-removebg-preview.png' },
+            { name: 'Ahmad Naufal', role: 'Fullstack Software Engineer', img: 'ahmad-removebg-preview.png' },
+            { name: 'Benny Siahaan', role: 'Machine Learning', img: 'benny-removebg-preview.png' },
+            { name: 'Ikhsan Effendy', role: 'Software Engineer & Ops Manager', img: 'ikhsan-removebg-preview.png' },
+            { name: 'Wina Widaningsih', role: 'Administrative Assistant Bookkeeper', img: 'wina-removebg-preview.png' },
+            { name: 'M. Wildan Aziz', role: 'Computer Vision & Machine Learning Engineer', img: 'wildan-removebg-preview.png' },
+            { name: 'Sam Cahill', role: 'Software Engineer', img: 'sam.png' },
+            { name: 'Thomas Collins', role: 'Systems Engineer', img: 'thomas.png' },
+            { name: 'Matthew Gilks', role: 'ARGO Project Manager', img: 'matteww.png' },
+            { name: 'Sophie Wentworth', role: 'Mechanical Engineering (Aerospace) Student', img: 'shope.png' },
+            { name: 'Sean McConville', role: 'Maintenance Control Officer', img: 'sean.png' },
+            { name: 'Timothy Durkin', role: 'Principal Safety Engineering and SMS', img: 'timoty.png' },
+            { name: 'Isabelle Beard', role: 'Mechanical and Aerospace Student', img: 'isable.png' },
+            // --- TAMBAHAN TIM BARU ---
+
+        ];
+        // --- 5. LOGIKA MARQUEE OTOMATIS ---
+        const marqueeTrack = document.getElementById('dynamicMarqueeTrack');
+
+        // Buat HTML string dari data teamMembers
+        let marqueeContent = '';
+        teamMembers.forEach(member => {
+            // Kita panggil placeholder SVG jika gambar tidak ditemukan agar layout tidak rusak
+            const fallbackImage = `onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'300\\' height=\\'400\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'%231a1a1c\\'/><text x=\\'50%\\' y=\\'50%\\' fill=\\'%23555\\' font-family=\\'Arial\\' font-size=\\'14\\' text-anchor=\\'middle\\' dominant-baseline=\\'middle\\'>Image Not Found</text></svg>'"`;
+
+            marqueeContent += `
+        <div class="marquee-item">
+            <img src="assets/people/${member.img}" alt="${member.name}" ${fallbackImage}>
+            <div class="marquee-info">
+                <h3>${member.name}</h3>
+                <p>${member.role}</p>
+            </div>
+        </div>
+    `;
+        });
+
+        // Duplikasi konten 1 kali lagi (total jadi 2 set) agar animasi scrolling terlihat menyambung tanpa batas
+        marqueeTrack.innerHTML = marqueeContent + marqueeContent;
         const teamContainer = document.getElementById('teamContainer');
         teamMembers.forEach((member, index) => {
-            const delay = index * 0.05; 
+            const delay = index * 0.05;
             const cardHTML = `
                 <div class="team-card reveal" style="transition-delay: ${delay}s">
                     <img src="assets/people/${member.img}" alt="${member.name}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'50\\' height=\\'50\\'><rect width=\\'50\\' height=\\'50\\' fill=\\'%23121214\\'/></svg>'">
@@ -486,7 +2069,7 @@
             teamContainer.innerHTML += cardHTML;
         });
 
-        // Logika Scroll Reveal Animation
+        // --- 2. LOGIKA SCROLL REVEAL (UMUM) ---
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -500,15 +2083,47 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        reveal(); // Init load
+        reveal();
 
-        // Logika Pemutar Musik
+        // --- 3. LOGIKA DRAMATIC ABOUT (SCROLL LOCK) ---
+        const daTrack = document.querySelector('.da-scroll-track');
+        const daSection = document.querySelector('.dramatic-about');
+
+        window.addEventListener('scroll', () => {
+            if (!daTrack) return;
+
+            // Hitung posisi dari track pembungkusnya
+            const rect = daTrack.getBoundingClientRect();
+
+            // Menghitung persentase scroll di dalam track yang tingginya 200vh
+            const scrollProgress = -rect.top / window.innerHeight;
+
+            // Saat scroll melewati 40% dari track, ganti ke fase 2 (Kristian)
+            if (scrollProgress > 0.4 && scrollProgress < 1.5) {
+                daSection.classList.add('phase-2');
+            } else if (scrollProgress <= 0.4) {
+                daSection.classList.remove('phase-2');
+            }
+        });
+
+        // --- 4. LOGIKA PEMUTAR MUSIK ---
         const audio = document.getElementById('bgMusic');
         const playBtn = document.getElementById('playBtn');
+        const trackNameDisplay = document.getElementById('trackName');
+
+        const playlist = [
+            { src: 'music2.mp3', name: 'Famility Team' },
+            { src: 'music.mp3', name: 'Sweet of all' }
+        ];
+
+        let currentTrackIndex = 0;
         let isPlaying = false;
 
+        audio.src = playlist[currentTrackIndex].src;
+        trackNameDisplay.innerText = playlist[currentTrackIndex].name;
+
         playBtn.addEventListener('click', () => {
-            if(isPlaying) {
+            if (isPlaying) {
                 audio.pause();
                 playBtn.innerHTML = '▶';
             } else {
@@ -517,6 +2132,297 @@
             }
             isPlaying = !isPlaying;
         });
+
+        audio.addEventListener('ended', () => {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            audio.src = playlist[currentTrackIndex].src;
+            trackNameDisplay.innerText = playlist[currentTrackIndex].name;
+            audio.play();
+            isPlaying = true;
+            playBtn.innerHTML = '⏸';
+        });
+
+        // --- 6. AI CHAT WIDGET LOGIC (SIMULATED LLM) ---
+        const aiChatBtn = document.getElementById('aiChatBtn');
+        const aiChatWindow = document.getElementById('aiChatWindow');
+        const aiCloseBtn = document.getElementById('aiCloseBtn');
+        const aiChatInput = document.getElementById('aiChatInput');
+        const aiSendBtn = document.getElementById('aiSendBtn');
+        const aiMessagesContainer = document.getElementById('aiChatMessages');
+
+        // Buka / Tutup Chat
+        aiChatBtn.addEventListener('click', () => {
+            aiChatWindow.classList.add('active');
+            aiChatBtn.style.transform = 'scale(0)'; // Sembunyikan tombol saat chat terbuka
+        });
+
+        aiCloseBtn.addEventListener('click', () => {
+            aiChatWindow.classList.remove('active');
+            aiChatBtn.style.transform = 'scale(1)'; // Munculkan kembali tombol
+        });
+
+        // Fungsi menampilkan pesan ke UI
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('chat-msg', sender);
+            msgDiv.innerText = text; // Gunakan innerText agar line break (\n) terbaca
+            aiMessagesContainer.appendChild(msgDiv);
+
+            // Auto-scroll ke bawah
+            aiMessagesContainer.scrollTop = aiMessagesContainer.scrollHeight;
+        }
+
+        // --- OTAK SIMULASI LLM (Context-Aware) ---
+        function getSimulatedLLMResponse(query) {
+            const q = query.toLowerCase();
+
+            if (q.includes('daa') || q.includes('detect')) {
+                return "Our Detect and Avoid (DAA) system processes complex airspace data in real-time. It is the foundational architecture for uncompromised safety, enabling secure BVLOS operations.";
+            } else if (q.includes('cargo') || q.includes('delivery')) {
+                return "For Cargo Delivery, RevAero provides scalable software frameworks designed to handle the logistics of tomorrow's aerial transport seamlessly.";
+            } else if (q.includes('agri') || q.includes('farm')) {
+                return "In Agriculture, precision data meets autonomous flight! We empower agronomists with high-fidelity insights through advanced technology.";
+            } else if (q.includes('utm') || q.includes('traffic')) {
+                return "Our Unmanned Traffic Management (UTM) solution orchestrates the sky. We develop backend endpoints to manage high-density autonomous traffic.";
+            } else if (q.includes('team') || q.includes('ceo') || q.includes('cto') || q.includes('who')) {
+                return "RevAero was founded by Dr. Terry Martin (CEO) and Kristian Cruickshank (CTO). We have an amazing team of Software Engineers like Yoga, Ahmad Naufal, Ikhsan, and many more talented individuals driving our vision.";
+            } else if (q.includes('contact') || q.includes('demo') || q.includes('email')) {
+                return "You can schedule a UTM system demo or contact us through the FAQ section below, or by clicking 'Consult Agronomist' in the navigation bar.";
+            } else if (q.includes('hello') || q.includes('hi')) {
+                return "Hi there! Welcome to Revolution Aerospace. What would you like to explore today? DAA, Cargo, or Agriculture?";
+            } else {
+                return "That's an interesting question! As the RevAero AI, my core focus is on our aerospace solutions (DAA, Cargo, Agri, UTM). Could you specify which area you'd like to know more about?";
+            }
+        }
+
+        // Fungsi Eksekusi Kirim Pesan
+        function handleSendMessage() {
+            const text = aiChatInput.value.trim();
+            if (!text) return; // Jangan kirim pesan kosong
+
+            // Tampilkan pesan User
+            appendMessage(text, 'user');
+            aiChatInput.value = ''; // Bersihkan input
+
+            // Efek delay agar terlihat seperti AI sedang berpikir (Typing effect)
+            setTimeout(() => {
+                const aiResponse = getSimulatedLLMResponse(text);
+                appendMessage(aiResponse, 'ai');
+            }, 800); // Delay 800ms
+        }
+
+        // Trigger kirim lewat tombol atau tombol Enter
+        aiSendBtn.addEventListener('click', handleSendMessage);
+        aiChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSendMessage();
+            }
+        });
+
+        // --- 7. AUTO-SLIDER QUOTE / TEAM BIO ---
+     const quotesData = [
+            {
+                name: "Dr. Terry Martin",
+                role: "Co-founder and CEO",
+                img: "terry.png",
+                text: "Dr Terry Martin is a former RAAF & Army military aerospace engineering officer & holds a PhD in Applied Signal Processing & Machine Learning. He is also an Adjunct Professor at Queensland University of Technology. Over a 35-year career-span, Terry has accumulated significant experience on fast jets and rotary wing crewed platforms, alongside an extensive array of work for RAAF, Navy and Army on a variety of UAV platforms."
+            },
+            {
+                name: "Kristian Cruickshank",
+                role: "Co-founder and CTO",
+                img: "kristian.png",
+                text: "Kristian is an aerospace engineer with a genuine belief that technology holds the solution to many large societal problems. His experience exists at the nexus of structured, rigorous engineering and innovative, agile approaches. With a wealth of practiced skills in systems engineering, software safety, assurance of autonomous systems, and a passion for advanced and complex technologies, Kristian aims to lead technical teams to the most pragmatic and innovative solutions for difficult problems."
+            },
+            {
+                name: "Zi Huang",
+                role: "Product Development Lead",
+                img: "zihuang.png",
+                text: "Zi Huang is driven by an unending curiosity in emerging aerospace technology, and is an enthusiastic aerospace engineer who embraces new concepts and non-traditional methods to problem solving. Zi's experience in R&D and systems engineering in the UAS domain has seen him successfully deliver projects both in Australia and Singapore across the spectrum of agile development and structured systems engineering."
+            },
+            {
+                name: "Rowan Carter",
+                role: "Senior Systems Engineer",
+                img: "rowan.png",
+                text: "Rowan is an aerospace engineer with a passion in aviation design and leading-edge technology. Rowan holds a Masters in Systems Engineering and has an innate ability to break down complex problems using a systems thinking approach, developing solutions which are simple, optimised and effective. Rowan has experience in Program Management, Guided Weapons Systems Engineering, Air-to-Air refueling and Compliance Assurance."
+            },
+            {
+                name: "Caelan Hilferty",
+                role: "Computer Vision Engineer",
+                img: "cal.png",
+                text: "Caelan is a recent graduate in Computer and Software Systems Engineering with experience in embedded systems, software, and web development. Caelan has a strong passion for combining technology with aviation and has experience flying and building systems for both crewed and remotely operated vehicles in addition to building simulation and analysis tools within the Uncrewed Traffic Management (UTM) research field."
+            },
+            {
+                name: "Diego Rossotti",
+                role: "Test and Evaluation Lead",
+                img: "diego.png",
+                text: "Diego holds more than 21 years' experience within the aerospace industry, including design engineering, test and evaluation, systems engineering, systems safety, technical airworthiness, operational airworthiness and production management. He was a former Defence Aerospace Engineer with Engineering Authority as an Aviation Design Engineer; within the Complex Aviation Acquisition Project environment."
+            },
+            {
+                name: "Angus McLaren",
+                role: "Senior Systems Engineer",
+                img: "angus.png",
+                text: "Angus McLaren is our Senior Systems Engineer with a wealth of experience in airworthiness and safety regulations, gained across several acquisition and sustainment programs, particularly in Defence aviation. Angus holds a Bachelor of Engineering, with the University of Adelaide."
+            },
+            {
+                name: "Daniel Jachimowicz",
+                role: "Senior Operations and Capability Advisor",
+                img: "daniel.png",
+                text: "Daniel Jachimowicz is our subject matter expert in Uncrewed Aircraft Systems. Dan possess technical and operational knowledge in the land and maritime domain. His in-field experience in first of class flight trials and systems acceptance within the Royal Australian Navy will support RevAero's mission of enabling emerging autonomous systems."
+            },
+            {
+                name: "Adam Gluchowski",
+                role: "Software Engineer",
+                img: "adam.png",
+                text: "Adam is dedicated to building scalable and secure backend systems that power our advanced aerospace solutions. His expertise in software architecture ensures that our platforms remain robust, reliable, and capable of handling complex, real-time data streams."
+            },
+            {
+                name: "Guy Morris",
+                role: "Project Director - EATP",
+                img: "guy.png",
+                text: "As Project Director for the EATP initiative, Guy brings extensive leadership and strategic oversight to complex aerospace programs. He excels at aligning cross-functional teams, managing stakeholder expectations, and driving critical milestones to successful completion."
+            },
+            {
+                name: "Dorotea Kojic",
+                role: "Corporate Support Officer",
+                img: "dorotea.png",
+                text: "Dorotea is the backbone of our daily operations, ensuring seamless corporate functionality. With a keen eye for detail and exceptional organizational skills, she manages administrative workflows that empower our engineering teams to focus on innovation."
+            },
+            {
+                name: "Tom Putland",
+                role: "Snr Research, Reg and Product Dev Engineer",
+                img: "tom.png",
+                text: "Tom bridges the gap between cutting-edge research and regulatory compliance. His deep understanding of aerospace regulations ensures that our innovative product developments not only push technological boundaries but also meet strict global safety standards."
+            },
+            {
+                name: "Matthew Ford",
+                role: "Graduate Engineer",
+                img: "mattew.png",
+                text: "Matthew is a driven Graduate Engineer eager to apply his academic foundation to real-world aerospace challenges. He supports our senior engineers in systems design and testing, bringing fresh perspectives and a strong analytical mindset to the team."
+            },
+            {
+                name: "Connor Demerutis",
+                role: "Graduate Engineer",
+                img: "connor.png",
+                text: "Connor brings enthusiasm and a solid theoretical background to our engineering projects. Working closely with the development teams, he assists in simulating autonomous flight models and refining technical documentation for our core systems."
+            },
+            {
+                name: "Waleed Khan",
+                role: "Senior Systems Engineer",
+                img: "waleed.png",
+                text: "Waleed possesses deep expertise in complex systems architecture and requirement analysis. He plays a pivotal role in the Detect and Avoid (DAA) projects, ensuring that intricate subsystems integrate flawlessly to maintain uncompromised operational safety."
+            },
+            {
+                name: "Yoga Unggul Prayoga",
+                role: "Fullstack Software Engineer",
+                img: "yoga-removebg-preview.png",
+                text: "Dedicated to building robust full-stack architecture for modern aerospace applications. Yoga bridges the gap between complex backend endpoints and seamless, intuitive user interfaces, shaping the digital ecosystem for the future of aviation."
+            },
+            {
+                name: "Ahmad Naufal",
+                role: "Fullstack Software Engineer",
+                img: "ahmad-removebg-preview.png",
+                text: "Ahmad is a versatile Fullstack Engineer who crafts scalable web applications and resilient API endpoints. His focus on clean code and efficient database management ensures that our UTM and operational platforms run smoothly under high-density scenarios."
+            },
+            {
+                name: "Benny Siahaan",
+                role: "Machine Learning Engineer",
+                img: "benny-removebg-preview.png",
+                text: "Benny specializes in developing predictive models and advanced machine learning algorithms. His work is crucial in optimizing our autonomous decision-making processes, particularly in complex airspace environments requiring split-second accuracy."
+            },
+            {
+                name: "Ikhsan Effendy",
+                role: "Software Engineer & Ops Manager",
+                img: "ikhsan-removebg-preview.png",
+                text: "Ikhsan operates at the intersection of technical development and operational strategy. Not only does he contribute to critical software engineering tasks, but he also ensures agile delivery, guiding the team to meet project goals efficiently."
+            },
+            {
+                name: "Wina Widaningsih",
+                role: "Administrative Assistant Bookkeeper",
+                img: "wina-removebg-preview.png",
+                text: "Wina maintains the financial health and administrative order of RevAero. With meticulous attention to detail in bookkeeping and office management, she provides the essential support needed for our team to operate without friction."
+            },
+            {
+                name: "M. Wildan Aziz",
+                role: "Computer Vision & Machine Learning Engineer",
+                img: "wildan-removebg-preview.png",
+                text: "Wildan focuses on the 'eyes' of our autonomous systems. By developing advanced perception algorithms and object detection models, he enables our platforms to accurately 'see' and interpret their surroundings for safe navigation."
+            },
+            {
+                name: "Sam Cahill",
+                role: "Software Engineer",
+                img: "sam.png",
+                text: "Sam is passionate about writing clean, maintainable code for mission-critical applications. He focuses on software reliability and optimizing user experiences, ensuring our technical solutions are both powerful and accessible."
+            },
+            {
+                name: "Thomas Collins",
+                role: "Systems Engineer",
+                img: "thomas.png",
+                text: "Thomas is integral to the system lifecycle process, from initial concept to final integration and testing. He works diligently to ensure that hardware and software components function harmoniously within our advanced aviation platforms."
+            },
+            {
+                name: "Matthew Gilks",
+                role: "ARGO Project Manager",
+                img: "matteww.png",
+                text: "Matthew leads the ARGO project with exceptional organizational and communication skills. He coordinates cross-disciplinary teams, manages project timelines, and ensures that deliverables align with both client needs and RevAero's strategic vision."
+            },
+            {
+                name: "Sophie Wentworth",
+                role: "Mechanical Engineering (Aerospace) Student",
+                img: "shope.png",
+                text: "Sophie combines academic rigor with hands-on mechanical design. Her understanding of aerodynamics and structural mechanics provides valuable insights as she supports the team in developing the physical frameworks of our autonomous systems."
+            },
+            {
+                name: "Sean McConville",
+                role: "Maintenance Control Officer",
+                img: "sean.png",
+                text: "Sean is dedicated to the operational readiness and safety of our fleet. With stringent maintenance protocols and thorough safety checks, he ensures that every platform meets the highest standards of airworthiness before taking flight."
+            },
+            {
+                name: "Timothy Durkin",
+                role: "Principal Safety Engineering and SMS",
+                img: "timoty.png",
+                text: "Timothy leads our Safety Management Systems (SMS) with uncompromising standards. His expertise in risk mitigation and safety engineering forms the foundational bedrock that allows RevAero to confidently push the boundaries of autonomous flight."
+            },
+            {
+                name: "Isabelle Beard",
+                role: "Mechanical and Aerospace Student",
+                img: "isable.png",
+                text: "Isabelle brings a passion for innovative mechanical design to the team. Applying her studies in aerospace engineering, she assists with structural analysis, CAD modeling, and exploring new materials to optimize platform performance."
+            }
+        ];
+        let currentQuoteIndex = 0;
+        const quoteContainer = document.getElementById('quoteDynamicContainer');
+        const quoteImg = document.getElementById('dynamicQuoteImg');
+        const quoteText = document.getElementById('dynamicQuoteText');
+        const quoteAuthor = document.getElementById('dynamicQuoteAuthor');
+
+        function rotateQuote() {
+            // 1. Tambahkan class hidden untuk efek fade out
+            quoteContainer.classList.add('quote-hidden');
+
+            // 2. Tunggu sebentar sampai efek fade out selesai (500ms), lalu ganti kontennya
+            setTimeout(() => {
+                currentQuoteIndex = (currentQuoteIndex + 1) % quotesData.length;
+                const nextData = quotesData[currentQuoteIndex];
+
+                // Update DOM
+                quoteImg.src = `assets/people/${nextData.img}`;
+                quoteText.innerHTML = `“${nextData.text}”`;
+                quoteAuthor.innerHTML = `<strong style="color: var(--brand-orange); font-size: 1.2rem;">${nextData.name}</strong><br>${nextData.role}`;
+
+                // Jika gambar gagal dimuat, gunakan placeholder abu-abu
+                quoteImg.onerror = function() {
+                    this.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='250' height='300'><rect width='250' height='300' fill='%23121214'/></svg>";
+                };
+
+                // 3. Hapus class hidden agar konten baru muncul (fade in)
+                quoteContainer.classList.remove('quote-hidden');
+            }, 500); // 500ms durasi transisi
+        }
+
+        // Jalankan fungsi rotateQuote setiap 3 detik (3000 milidetik)
+        setInterval(rotateQuote, 3000);
     </script>
 </body>
+
 </html>
