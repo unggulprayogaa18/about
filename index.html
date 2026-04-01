@@ -548,8 +548,19 @@
 
         /* --- TEAM SECTION --- */
         .team-section {
+            position: relative;
+            /* Tambahan wajib untuk background video */
+            overflow: hidden;
+            /* Tambahan wajib agar video tidak meleber */
             padding: 8rem 5%;
-            background-color: var(--bg-dark);
+            /* background-color: var(--bg-dark); <- Hapus atau beri komentar pada baris ini */
+        }
+
+        /* Tambahkan ini agar konten teks dan kartu tim tampil di atas video */
+        .team-header,
+        .team-grid {
+            position: relative;
+            z-index: 2;
         }
 
         .team-header {
@@ -1695,10 +1706,13 @@
             .form-row {
                 grid-template-columns: 1fr;
             }
-        }/* --- DYNAMIC QUOTE TRANSITION --- */
+        }
+
+        /* --- DYNAMIC QUOTE TRANSITION --- */
         #quoteDynamicContainer {
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
+
         .quote-hidden {
             opacity: 0;
             transform: translateY(15px);
@@ -1788,6 +1802,13 @@
         </div>
     </section>
     <section id="team" class="team-section reveal">
+
+        <video autoplay loop muted playsinline class="bg-video">
+            <source src="https://video.wixstatic.com/video/11062b_cb0c4d13153f4008920bb26beda8de0f/720p/mp4/file.mp4"
+                type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="video-overlay"></div>
         <div class="team-header">
             <h2>Meet Our Team</h2>
             <p>We are proud to have some of the industry’s most experienced and diverse people on our team. The
@@ -1895,15 +1916,19 @@
         </div>
     </section>
 
- <section class="quote-showcase reveal">
+    <section class="quote-showcase reveal">
         <div class="quote-container" id="quoteDynamicContainer">
             <div class="quote-image-wrapper">
                 <img src="assets/people/terry.png" alt="Dr. Terry Martin" id="dynamicQuoteImg">
                 <div class="quote-icon">❝</div>
             </div>
             <div class="quote-text">
-                <blockquote id="dynamicQuoteText">“Dr Terry Martin is a former RAAF & Army military aerospace engineering officer & holds a PhD in Applied Signal Processing & Machine Learning. He is also an Adjunct Professor at Queensland University of Technology. Over a 35-year career-span, Terry has accumulated significant experience on fast jets and rotary wing crewed platforms...”</blockquote>
-                <p id="dynamicQuoteAuthor"><strong style="color: var(--brand-orange); font-size: 1.2rem;">Dr. Terry Martin</strong><br>Co-founder and CEO</p>
+                <blockquote id="dynamicQuoteText">“Dr Terry Martin is a former RAAF & Army military aerospace
+                    engineering officer & holds a PhD in Applied Signal Processing & Machine Learning. He is also an
+                    Adjunct Professor at Queensland University of Technology. Over a 35-year career-span, Terry has
+                    accumulated significant experience on fast jets and rotary wing crewed platforms...”</blockquote>
+                <p id="dynamicQuoteAuthor"><strong style="color: var(--brand-orange); font-size: 1.2rem;">Dr. Terry
+                        Martin</strong><br>Co-founder and CEO</p>
             </div>
         </div>
     </section>
@@ -1983,14 +2008,10 @@
                     <button type="submit" class="ag-btn ag-btn-primary">Submit</button>
                 </form>
             </div>
-           <div class="connect-map">
-                <iframe 
-                    src="https://maps.google.com/maps?q=92+Regency+Rd,+Ferryden+Park+SA+5010,+Australia&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                    width="100%" 
-                    height="100%" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
+            <div class="connect-map">
+                <iframe
+                    src="https://maps.google.com/maps?q=92+Regency+Rd,+Ferryden+Park+SA+5010,+Australia&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
@@ -2220,7 +2241,7 @@
         });
 
         // --- 7. AUTO-SLIDER QUOTE / TEAM BIO ---
-     const quotesData = [
+        const quotesData = [
             {
                 name: "Dr. Terry Martin",
                 role: "Co-founder and CEO",
@@ -2411,7 +2432,7 @@
                 quoteAuthor.innerHTML = `<strong style="color: var(--brand-orange); font-size: 1.2rem;">${nextData.name}</strong><br>${nextData.role}`;
 
                 // Jika gambar gagal dimuat, gunakan placeholder abu-abu
-                quoteImg.onerror = function() {
+                quoteImg.onerror = function () {
                     this.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='250' height='300'><rect width='250' height='300' fill='%23121214'/></svg>";
                 };
 
