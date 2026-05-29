@@ -48,95 +48,141 @@
         }
 
         /* =========================================
-           NOTCH SHAPE
+           NAVBAR
         ========================================= */
-        .notch {
-            position: fixed;
-            /* Diubah ke fixed agar menempel saat di-scroll */
+        #nav {
+            position: absolute;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 550px;
-            height: 80px;
-            z-index: 105;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 32px;
+            border-bottom: 1px solid transparent;
+            transition: none;
         }
 
-        .notch svg {
-            width: 100%;
-            height: 100%;
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .nav-logo img {
+            height: 30px;
+            width: auto;
+            object-fit: contain;
             display: block;
         }
 
-        /* =========================================
-           NAVBAR CONTAINER
-        ========================================= */
-        #main-nav {
-            position: fixed;
-            /* Diubah ke fixed agar menempel saat di-scroll */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 110;
-            /* Tambahan efek blur opsional agar teks terbaca saat melewati background terang */
-            background: linear-gradient(to bottom, rgba(9, 9, 11, 0.9) 0%, rgba(9, 9, 11, 0) 100%);
+        .nav-logo .ae {
+            padding-left: 14px;
+            border-left: 1px solid rgba(255, 255, 255, 0.14);
+            color: #f5f2ec;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.34em;
+            line-height: 1;
+            text-transform: uppercase;
         }
 
-        /* =========================================
-           LOGO
-        ========================================= */
-        .logo {
+        .nav-links {
             display: flex;
-            left: 20px;
             align-items: center;
+            gap: 38px;
+        }
+
+        .nav-links a {
             position: relative;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        /* =========================================
-           NAV LINKS (CENTERED)
-        ========================================= */
-        .ag-nav-links {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            height: 100%;
-            padding: 0;
-            background: transparent;
-        }
-
-        .ag-nav-links a {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95rem;
+            padding: 6px 0;
+            color: rgba(245, 242, 236, 0.72);
+            font-size: 0.82rem;
             font-weight: 500;
+            letter-spacing: 0.12em;
             text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
+            text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+            text-transform: uppercase;
+            transition: color 0.25s ease;
         }
 
-        .ag-nav-links a:hover {
-            color: var(--brand-orange);
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--brand-orange);
+            transition: width 0.3s ease;
         }
 
-        .ag-nav-links a.active {
-            color: var(--brand-orange);
+        .nav-links a:hover {
+            color: #f5f2ec;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 26px;
+            border: 1px solid var(--brand-orange);
+            border-radius: 2px;
+            background: var(--brand-orange);
+            color: #ffffff;
+            font-size: 0.82rem;
             font-weight: 600;
+            letter-spacing: 0.08em;
+            line-height: 1;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
         }
 
-        /* =========================================
-           BUTTON
-        ========================================= */
+        .btn:hover {
+            background: #ff7e27;
+            box-shadow: 0 8px 30px rgba(255, 126, 39, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .btn.ghost {
+            background: transparent;
+            border-color: rgba(255, 255, 255, 0.14);
+            color: #f5f2ec;
+        }
+
+        .btn.ghost:hover {
+            border-color: var(--brand-orange);
+            box-shadow: none;
+            color: #ff7e27;
+        }
+
+        .nav-burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .nav-burger span {
+            width: 26px;
+            height: 2px;
+            background: #f5f2ec;
+            transition: 0.3s ease;
+        }
+
+        .nav-cta-mobile {
+            display: none;
+        }
+
         .ag-btn {
             padding: 0.6rem 1.4rem;
             border-radius: 8px;
@@ -160,34 +206,71 @@
            NAVBAR RESPONSIVE
         ========================================= */
         @media (max-width: 992px) {
-            .notch {
+            #nav {
+                padding: 16px 20px;
+            }
+
+            .nav-logo img {
+                height: 28px;
+            }
+
+            .nav-logo .ae {
+                padding-left: 10px;
+                font-size: 0.68rem;
+                letter-spacing: 0.24em;
+            }
+
+            .nav-links {
+                position: fixed;
+                inset: 0;
+                flex-direction: column;
+                justify-content: center;
+                gap: 30px;
+                background: rgba(14, 17, 22, 0.97);
+                backdrop-filter: blur(20px);
+                transform: translateX(100%);
+                transition: transform 0.4s ease;
+                z-index: 999;
+            }
+
+            .nav-links.open {
+                transform: none;
+            }
+
+            .nav-links a {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+
+            .nav-burger {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .nav-burger.x span:nth-child(1) {
+                transform: translateY(7px) rotate(45deg);
+            }
+
+            .nav-burger.x span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-burger.x span:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg);
+            }
+
+            .nav-cta-desktop {
                 display: none;
             }
 
-            #main-nav {
-                background: var(--bg-dark);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .ag-nav-links {
-                position: static;
-                transform: none;
-                gap: 1.5rem;
-            }
-
-            .ag-btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
+            .nav-cta-mobile {
+                display: inline-flex;
             }
         }
 
         @media (max-width: 576px) {
-            .ag-nav-links {
-                display: none;
-            }
-
-            .logo img {
-                height: 50px;
+            .nav-logo img {
+                height: 26px;
             }
         }
 
@@ -1718,23 +1801,18 @@
         </div>
     </div>
 
-    <div class="notch">
-        <svg viewBox="0 0 550 80" preserveAspectRatio="none">
-            <polygon points="0,0 550,0 490,80 60,80" fill="#09090b" />
-            <polyline points="0,0 60,80 490,80 550,0" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
-        </svg>
-    </div>
-
-    <nav id="main-nav">
-        <div class="logo">
+    <nav id="nav">
+        <a class="nav-logo" href="#">
             <img src="assets/foto/logo.png" alt="RevAero Logo" id="nav-logo">
-        </div>
-        <div class="ag-nav-links">
+            <span class="ae">Australia</span>
+        </a>
+        <div class="nav-links" id="navLinks">
             <a href="https://revnaerodaa.vercel.app/">Detect & Avoid</a>
             <a href="https://revnaerocargo.vercel.app/">Cargo Delivery</a>
-            <a href="https://revnaeroagriculture.vercel.app/">Agriculture</a>
+            <a href="https://agricultureaero.vercel.app/">Agriculture</a>
         </div>
-        <button class="ag-btn ag-btn-primary" style="position: relative; right: 20px;">Consult Agronomist</button>
+        <a class="btn ghost nav-cta-desktop" id="navCta" href="#lets-connect">Contact</a>
+        <button class="nav-burger" id="burger" type="button" aria-label="Toggle navigation" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
     </nav>
     <div class="da-scroll-track">
         <section class="dramatic-about">
@@ -2084,6 +2162,25 @@
         }
         window.addEventListener("scroll", reveal);
         reveal();
+
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+
+        if (burger && navLinks) {
+            burger.addEventListener('click', () => {
+                const isOpen = navLinks.classList.toggle('open');
+                burger.classList.toggle('x', isOpen);
+                burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('open');
+                    burger.classList.remove('x');
+                    burger.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
 
         // --- 3. LOGIKA DRAMATIC ABOUT (SCROLL LOCK) ---
         const daTrack = document.querySelector('.da-scroll-track');
